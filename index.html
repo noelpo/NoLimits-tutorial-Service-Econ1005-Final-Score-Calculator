@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Exam Score Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Final Exam Score Calculator</h1>
+        <label for="overallGrade">Overall Course Grade (%):</label>
+        <input type="number" id="overallGrade" placeholder="e.g., 85" />
+
+        <label for="midterm1">Midterm 1 Score (%):</label>
+        <input type="number" id="midterm1" placeholder="e.g., 60" />
+
+        <label for="midterm2">Midterm 2 Score (%):</label>
+        <input type="number" id="midterm2" placeholder="e.g., 92" />
+
+        <label for="quiz">Quiz Score (%):</label>
+        <input type="number" id="quiz" placeholder="e.g., 75" />
+
+        <label for="finalWeight">Final Exam Weight (%):</label>
+        <input type="number" id="finalWeight" placeholder="e.g., 50" />
+
+        <label for="finalMarks">Final Exam Max Marks:</label>
+        <input type="number" id="finalMarks" placeholder="e.g., 65" />
+
+        <button onclick="calculateFinalExam()">Calculate</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateFinalExam() {
+            // Input Values
+            const overallGrade = parseFloat(document.getElementById("overallGrade").value);
+            const midterm1 = parseFloat(document.getElementById("midterm1").value);
+            const midterm2 = parseFloat(document.getElementById("midterm2").value);
+            const quiz = parseFloat(document.getElementById("quiz").value);
+            const finalWeight = parseFloat(document.getElementById("finalWeight").value);
+            const finalMarks = parseFloat(document.getElementById("finalMarks").value);
+
+            // Weights
+            const midtermWeight = 20;
+            const quizWeight = 10;
+
+            // Contributions
+            const midterm1Contribution = midterm1 * (midtermWeight / 100);
+            const midterm2Contribution = midterm2 * (midtermWeight / 100);
+            const quizContribution = quiz * (quizWeight / 100);
+
+            // Calculate Final Exam Contribution
+            const finalExamContribution = overallGrade - (midterm1Contribution + midterm2Contribution + quizContribution);
+
+            // Final Exam Score as a Percentage
+            const finalExamPercentage = (finalExamContribution / (finalWeight / 100)) * 100;
+
+            // Final Exam Score out of Max Marks
+            const finalExamScore = (finalExamPercentage / 100) * finalMarks;
+
+            // Output Results
+            document.getElementById("result").innerHTML = `
+                <p><strong>Final Exam Percentage:</strong> ${finalExamPercentage.toFixed(2)}%</p>
+                <p><strong>Final Exam Score:</strong> ${finalExamScore.toFixed(2)} out of ${finalMarks}</p>
+                <p><strong>Final Exam Contribution:</strong> ${finalExamContribution.toFixed(2)}% of the overall grade.</p>
+            `;
+        }
+    </script>
+</body>
+</html>
